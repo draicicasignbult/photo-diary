@@ -3,144 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D 摄影日记</title>
+<title>Editorial Portfolio | 摄影集</title>
 <style>
-/* ========== 3D 小清新日记本风格 ========== */
+/* ========== 高端杂志/画册风格 (Editorial Style) ========== */
 :root {
-  --paper: #fdf8f0;
-  --paper-dark: #f5edd8;
-  --paper-light: #fffdf7;
-  --ink: #4a3f35;
-  --ink-light: #8b7e6e;
-  --ink-lighter: #b8a99a;
-  --mint: #a8d8c8;
-  --mint-light: #d4efe6;
-  --blush: #f0c8c8;
-  --blush-light: #fae8e8;
-  --sky: #c4dce8;
-  --line: #e0d5c5;
-  --line-light: #ebe3d5;
+  --bg-color: #e5e5e5;       /* 外围背景灰 */
+  --page-bg: #fdfdfc;        /* 纸张白 */
+  --text-main: #111111;      /* 极黑 */
+  --text-muted: #7a7a7a;     /* 高级灰 */
+  --accent: #c41e1e;         /* 经典编辑红 */
+  --line-color: #dddddd;     /* 极细边框线 */
+  
+  /* 字体设置：标题用衬线体，正文用无衬线体 */
+  --font-serif: 'Playfair Display', 'Noto Serif SC', 'Times New Roman', serif;
+  --font-sans: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;
-  color: var(--ink);
-  background: #e8e3d9; /* 外层背景稍微深一点，突出中间的相册 */
-  line-height: 1.8;
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background: var(--bg-color);
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1500px; /* 3D 景深 */
+  perspective: 2500px; /* 更深的3D景深，适合大画册 */
 }
 
-/* 背景杂色纹理 */
-body::before {
-  content: ''; position: fixed; inset: 0;
-  background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
-  pointer-events: none; z-index: 0;
-}
-
-/* ===== 3D 相册封面 ===== */
-.album-cover {
+/* ===== 3D 画册封面 ===== */
+.magazine-cover {
   position: fixed; 
   inset: 5% 10%;
   z-index: 300;
-  background: linear-gradient(135deg, var(--paper-dark) 0%, #e3d5b8 100%);
-  border-radius: 4px 16px 16px 4px;
-  box-shadow: inset 4px 0 10px rgba(0,0,0,0.1), 20px 20px 40px rgba(74,63,53,0.3);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #111; /* 纯黑封面 */
+  color: #fff;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 60px 40px;
+  box-shadow: inset 4px 0 10px rgba(255,255,255,0.05), 30px 20px 50px rgba(0,0,0,0.4);
   transform-origin: left center;
-  transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s ease-in;
+  transition: transform 1.4s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease-in;
   cursor: pointer;
-  border-left: 8px solid #c2a784; /* 书脊 */
+  border-left: 2px solid #333;
 }
-.album-cover:hover {
-  transform: rotateY(-5deg); /* 悬停时微微打开 */
+.magazine-cover:hover {
+  transform: rotateY(-3deg);
 }
-.album-cover.opened {
-  transform: rotateY(-120deg) scale(0.9);
+.magazine-cover.opened {
+  transform: rotateY(-130deg) scale(0.95);
   opacity: 0;
   pointer-events: none;
 }
+.cover-top {
+  display: flex; justify-content: space-between;
+  font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 20px;
+}
+.cover-center {
+  text-align: center;
+}
 .cover-title {
-  font-family: 'Noto Serif SC','STSong',serif;
-  font-size: 4rem; color: var(--ink);
-  margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+  font-family: var(--font-serif);
+  font-size: 5rem; 
+  font-weight: 400;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
-.cover-tip {
-  background: rgba(255,255,255,0.6); padding: 8px 24px; border-radius: 20px;
-  font-size: 1.1rem; color: var(--ink-light); border: 1px dashed var(--ink-lighter);
-  animation: pulse 2s infinite;
+.cover-subtitle {
+  font-size: 1rem; letter-spacing: 6px; color: var(--text-muted);
+  text-transform: uppercase;
 }
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+.cover-bottom {
+  text-align: center; font-size: 0.85rem; letter-spacing: 2px;
+  color: var(--accent);
+  animation: fadePulse 2s infinite;
+}
+@keyframes fadePulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
-/* ===== 核心 App 容器 (内页) ===== */
+/* ===== 核心 画册容器 (内页) ===== */
 #app {
   position: relative; z-index: 1;
-  width: 90vw; max-width: 1000px; height: 85vh;
-  background: var(--paper);
-  border-radius: 4px 16px 16px 4px;
-  box-shadow: 10px 10px 30px rgba(74,63,53,.15), -2px 0 5px rgba(0,0,0,0.05);
-  background-image: repeating-linear-gradient(0deg,transparent,transparent 31px,var(--line-light) 31px,var(--line-light) 32px);
+  width: 90vw; max-width: 1200px; height: 85vh;
+  background: var(--page-bg);
+  box-shadow: 20px 20px 60px rgba(0,0,0,0.15), -1px 0 2px rgba(0,0,0,0.05);
   overflow: hidden;
   display: flex; flex-direction: column;
 }
 
-/* 左侧书脊阴影 */
+/* 书脊阴影 */
 #app::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 30px;
-  background: linear-gradient(to right, rgba(0,0,0,0.08) 0%, transparent 100%);
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 40px;
+  background: linear-gradient(to right, rgba(0,0,0,0.06) 0%, transparent 100%);
   z-index: 150; pointer-events: none;
 }
 
-/* ===== 导航栏 ===== */
+/* ===== 极简导航栏 ===== */
 .nav {
   position: absolute; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 24px; background: linear-gradient(to bottom, var(--paper) 60%, transparent);
+  padding: 30px 50px; 
+  background: linear-gradient(to bottom, rgba(253,253,252,1) 70%, rgba(253,253,252,0));
 }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--text-main);
+  padding-bottom: 15px;
 }
 .nav-logo {
-  font-family: 'Noto Serif SC','STSong',serif;
+  font-family: var(--font-serif);
   font-size: 1.5rem; font-weight: 600; cursor: pointer;
-  margin-left: 20px;
+  letter-spacing: 1px;
 }
 .nav-links {
-  display: flex; gap: 8px; background: rgba(253,248,240,.8);
-  padding: 6px; border-radius: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  display: flex; gap: 40px;
 }
 .nav-link {
-  padding: 8px 24px; border-radius: 20px; font-size: 1rem;
-  color: var(--ink-light); cursor: pointer; transition: all .3s;
-  background: none; border: none; outline: none;
+  font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-muted); cursor: pointer; transition: color .3s;
+  background: none; border: none; outline: none; padding: 0;
 }
-.nav-link:hover { color: var(--ink); background: var(--mint-light); transform: translateY(-2px); }
-.nav-link.active { background: var(--mint); color: var(--ink); font-weight: 600; box-shadow: 0 4px 12px rgba(168,216,200,0.4); }
+.nav-link:hover { color: var(--text-main); }
+.nav-link.active { color: var(--text-main); font-weight: 600; }
 
 /* ===== 页面容器 (3D 翻页效果) ===== */
 .page-container {
   flex: 1; position: relative; overflow-y: auto; overflow-x: hidden;
-  padding-top: 100px;
-  perspective: 1200px;
+  padding-top: 120px;
+  perspective: 2000px;
 }
-/* 自定义滚动条 */
-.page-container::-webkit-scrollbar { width: 8px; }
-.page-container::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+.page-container::-webkit-scrollbar { width: 4px; }
+.page-container::-webkit-scrollbar-thumb { background: #ccc; }
 
 .page {
   position: absolute; top: 0; left: 0; right: 0; min-height: 100%;
-  padding: 100px 40px 60px;
+  padding: 120px 50px 80px;
   opacity: 0; pointer-events: none;
   transform-origin: left center;
-  transform: rotateY(-30deg) translateZ(-100px);
-  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: rotateY(-20deg) translateZ(-50px);
+  transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .page.active {
   opacity: 1; pointer-events: auto;
@@ -148,148 +155,184 @@ body::before {
   position: relative;
 }
 
-/* ===== Hero 区 ===== */
-.hero { text-align: center; padding: 20px 0 50px; }
-.hero-title { font-family: 'Noto Serif SC','STSong',serif; font-size: 3rem; margin-bottom: 16px; text-shadow: 1px 1px 2px var(--paper-light); }
-.hero-subtitle { font-size: 1.2rem; color: var(--ink-light); }
+/* ===== 标题区 ===== */
+.section-header { margin-bottom: 50px; }
+.section-title { 
+  font-family: var(--font-serif); font-size: 3rem; 
+  font-weight: 400; margin-bottom: 10px;
+  text-transform: uppercase; letter-spacing: 2px;
+}
+.section-subtitle { 
+  font-size: 0.9rem; color: var(--text-muted); 
+  letter-spacing: 1px; text-transform: uppercase;
+}
 
-/* ===== 分类筛选 ===== */
-.filters { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+/* ===== 分类筛选 (Editorial 风格) ===== */
+.filters { 
+  display: flex; gap: 30px; margin-bottom: 40px; flex-wrap: wrap;
+  border-top: 1px solid var(--line-color);
+  border-bottom: 1px solid var(--line-color);
+  padding: 15px 0;
+}
 .filter-btn {
-  padding: 10px 24px; border-radius: 20px; font-size: 1rem;
-  background: var(--paper-light); border: 1px solid var(--line);
-  color: var(--ink-light); cursor: pointer; transition: all .3s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
+  background: none; border: none;
+  color: var(--text-muted); cursor: pointer; transition: color .3s;
 }
-.filter-btn:hover { background: var(--mint-light); border-color: var(--mint); color: var(--ink); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(168,216,200,0.2); }
-.filter-btn.active { background: var(--mint); border-color: var(--mint); color: var(--ink); font-weight: 600; }
+.filter-btn:hover { color: var(--text-main); }
+.filter-btn.active { color: var(--accent); font-weight: 600; }
 
-/* ===== 3D 画廊网格 ===== */
-.gallery { max-width: 850px; margin: 0 auto; perspective: 1000px; }
+/* ===== 杂志排版画廊网格 ===== */
+.gallery { max-width: 100%; margin: 0 auto; }
 .grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; gap: 24px;
+  display: grid; grid-template-columns: repeat(4, 1fr); 
+  grid-auto-rows: 300px; gap: 2px; /* 极细缝隙 */
+  background: var(--line-color); /* 缝隙颜色 */
+  border: 1px solid var(--line-color);
 }
-
-/* 照片卡片 3D 浮雕设计 */
 .card {
-  cursor: pointer; border-radius: 12px; overflow: hidden;
-  background: var(--paper-light); padding: 8px 8px 16px;
-  border: 1px solid var(--line-light);
-  box-shadow: 2px 4px 12px rgba(74,63,53,.08);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer; position: relative; overflow: hidden;
+  background: var(--page-bg);
   display: flex; flex-direction: column;
-  transform-style: preserve-3d; /* 维持子元素的3D层级 */
-}
-.card:hover {
-  /* 悬停时的 3D 浮起和轻微旋转 */
-  transform: translateY(-10px) rotateX(4deg) rotateY(-4deg) translateZ(10px);
-  box-shadow: 15px 20px 30px rgba(74,63,53,.15);
-  border-color: var(--mint);
 }
 .card.tall { grid-row: span 2; }
 .card.wide { grid-column: span 2; }
 .card.big { grid-column: span 2; grid-row: span 2; }
 
 .card-img {
-  flex: 1; overflow: hidden; border-radius: 8px;
-  position: relative; transform: translateZ(10px); /* 让图片稍微突起 */
+  width: 100%; height: 100%; position: relative; overflow: hidden;
 }
-.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
-.card:hover .card-img img { transform: scale(1.08); }
+.card-img img { 
+  width: 100%; height: 100%; object-fit: cover; 
+  filter: grayscale(80%); /* 默认黑白灰高级感 */
+  transition: transform 0.8s ease, filter 0.5s ease; 
+}
+.card:hover .card-img img { 
+  transform: scale(1.03); 
+  filter: grayscale(0%); /* 悬停恢复色彩 */
+}
 
-.card-info {
-  padding-top: 12px; text-align: center;
-  transform: translateZ(5px);
+/* 图片悬停信息浮层 */
+.card-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.4);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 30px; opacity: 0; transition: opacity 0.4s ease;
+  color: #fff;
 }
-.card-title { font-family: 'Noto Serif SC','STSong',serif; font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-.card-meta { font-size: .8rem; color: var(--ink-lighter); }
+.card:hover .card-overlay { opacity: 1; }
+.card-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; margin-bottom: 5px; }
+.card-meta { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
 
-/* 和纸胶带装饰 */
-.tape {
-  position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-  width: 60px; height: 25px; background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); backdrop-filter: blur(2px);
-  border-left: 2px dashed rgba(0,0,0,0.05); border-right: 2px dashed rgba(0,0,0,0.05);
-  z-index: 10; pointer-events: none;
+/* ===== 关于页 (排版分割设计) ===== */
+.about-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  align-items: center; height: 100%;
 }
-.card:nth-child(even) .tape { transform: translateX(-50%) rotate(3deg); background: var(--tape); }
+.about-image {
+  width: 100%; height: 600px;
+  background: url('https://images.unsplash.com/photo-1554046920-90dc5823ca01?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
+  filter: grayscale(100%);
+}
+.about-content { padding-right: 40px; }
+.about-name { font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 20px; text-transform: uppercase; }
+.about-desc { 
+  font-size: 1rem; color: var(--text-muted); line-height: 2; margin-bottom: 40px;
+  text-align: justify;
+}
+.gear-list { border-top: 1px solid var(--text-main); padding-top: 20px; }
+.gear-item {
+  display: flex; justify-content: space-between;
+  font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 15px; border-bottom: 1px solid var(--line-color); padding-bottom: 5px;
+}
 
-/* ===== 关于与联系页排版 ===== */
-.about, .contact { max-width: 650px; margin: 0 auto; }
-.paper-card {
-  background: var(--paper-light); border: 1px solid var(--line-light);
-  border-radius: 12px; padding: 48px 40px; position: relative;
-  box-shadow: 5px 10px 25px rgba(74,63,53,.08);
-  transform-style: preserve-3d; transition: transform 0.3s;
-}
-.paper-card:hover { transform: translateY(-5px); box-shadow: 10px 15px 35px rgba(74,63,53,.12); }
-.paper-card::before { /* 侧边线圈/装订孔效果 */
-  content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 4px;
-  background: repeating-linear-gradient(180deg, var(--line-light) 0px, var(--line-light) 12px, transparent 12px, transparent 24px);
-}
-.about-avatar {
-  width: 130px; height: 130px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--mint-light), var(--sky));
-  display: flex; align-items: center; justify-content: center; font-size: 3.5rem;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px;
-}
+/* ===== 联系页 (杂志表单) ===== */
+.contact-layout { max-width: 600px; margin: 0 auto; padding-top: 40px; }
+.contact-desc { text-align: center; color: var(--text-muted); margin-bottom: 50px; font-size: 0.9rem; letter-spacing: 1px; }
+
+.form-group { margin-bottom: 40px; position: relative; }
 .form-input, .form-textarea {
-  width: 100%; padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px;
-  background: var(--paper); font-size: 1rem; color: var(--ink); outline: none; transition: all .3s;
+  width: 100%; padding: 10px 0; border: none; border-bottom: 1px solid var(--text-main);
+  background: transparent; font-size: 1rem; color: var(--text-main); outline: none;
+  font-family: var(--font-sans); resize: none;
+  transition: border-color 0.3s;
 }
-.form-input:focus, .form-textarea:focus { border-color: var(--mint); box-shadow: 0 0 0 4px var(--mint-light); transform: translateY(-2px); }
-.form-btn { width: 100%; padding: 16px; background: var(--mint); border-radius: 30px; font-size: 1.1rem; border: none; cursor: pointer; transition: all .3s; }
-.form-btn:hover { background: #96d0be; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(168,216,200,0.5); }
+.form-input::placeholder, .form-textarea::placeholder { color: #aaa; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+.form-input:focus, .form-textarea:focus { border-bottom-color: var(--accent); }
 
-/* ===== 灯箱 ===== */
+.form-btn {
+  background: var(--text-main); color: #fff; border: none;
+  padding: 15px 40px; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: background 0.3s; width: 100%;
+}
+.form-btn:hover { background: var(--accent); }
+
+/* ===== 灯箱 (极简无框) ===== */
 .lightbox {
-  position: fixed; inset: 0; z-index: 1000; background: rgba(30,25,20,.95);
+  position: fixed; inset: 0; z-index: 1000; background: rgba(255,255,255,0.98);
   display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transition: opacity .4s ease;
-  backdrop-filter: blur(5px);
 }
 .lightbox.show { opacity: 1; pointer-events: auto; }
-.lb-close { position: absolute; top: 24px; right: 24px; font-size: 2rem; color: #fff; background: none; border: none; cursor: pointer; transition: transform .3s; }
-.lb-close:hover { transform: scale(1.2) rotate(90deg); }
-.lb-main { display: flex; align-items: center; gap: 30px; max-width: 95vw; }
-.lb-arrow { font-size: 3rem; color: rgba(255,255,255,.6); background: none; border: none; cursor: pointer; transition: color .3s, transform .3s; }
-.lb-arrow:hover { color: #fff; transform: scale(1.2); }
-.lb-img { max-width: 75vw; max-height: 80vh; border-radius: 8px; box-shadow: 0 20px 50px rgba(0,0,0,.5); border: 4px solid #fff; }
-.lb-info { position: absolute; bottom: 30px; text-align: center; color: #fff; }
+.lb-close { 
+  position: absolute; top: 40px; right: 50px; font-size: 2rem; font-weight: 300; 
+  color: var(--text-main); background: none; border: none; cursor: pointer; transition: transform .3s; 
+}
+.lb-close:hover { transform: rotate(90deg); color: var(--accent); }
+.lb-main { display: flex; align-items: center; justify-content: space-between; width: 90vw; }
+.lb-arrow { font-size: 2.5rem; color: #ccc; background: none; border: none; cursor: pointer; transition: color .3s; font-weight: 300; padding: 0 20px;}
+.lb-arrow:hover { color: var(--text-main); }
+.lb-img-container { max-width: 70vw; max-height: 80vh; text-align: center; }
+.lb-img { max-width: 100%; max-height: 75vh; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.lb-info { margin-top: 20px; font-family: var(--font-serif); font-size: 1.2rem; }
+.lb-meta { font-size: 0.75rem; font-family: var(--font-sans); letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 5px; }
 
 /* ===== 响应式 ===== */
-@media (max-width: 768px) {
-  #app { width: 95vw; height: 90vh; }
+@media (max-width: 900px) {
+  .cover-title { font-size: 3.5rem; }
   .grid { grid-template-columns: repeat(2, 1fr); }
-  .card.wide { grid-column: span 2; }
-  .card.big { grid-column: span 2; grid-row: span 1; }
-  .nav-links { gap: 0; }
-  .nav-link { padding: 6px 12px; font-size: 0.9rem; }
-  .cover-title { font-size: 2.5rem; }
+  .about-layout { grid-template-columns: 1fr; }
+  .about-image { height: 400px; }
+  .nav { padding: 20px; }
+  .nav-links { gap: 15px; }
+  .page { padding: 100px 20px 40px; }
 }
 @media (max-width: 480px) {
+  .cover-title { font-size: 2.5rem; }
   .grid { grid-template-columns: 1fr; }
   .card.wide, .card.tall, .card.big { grid-column: span 1; grid-row: span 1; }
+  .nav-logo { font-size: 1.2rem; }
+  .nav-links { gap: 10px; }
+  .nav-link { font-size: 0.75rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- 3D 封面 -->
-<div class="album-cover" id="albumCover" onclick="openAlbum()">
-  <h1 class="cover-title">我的摄影日记</h1>
-  <div class="cover-tip">点击翻开相册</div>
+<!-- 3D 杂志封面 -->
+<div class="magazine-cover" id="albumCover" onclick="openAlbum()">
+  <div class="cover-top">
+    <span>Vol. 01</span>
+    <span>2026</span>
+  </div>
+  <div class="cover-center">
+    <h1 class="cover-title">Portfolio</h1>
+    <div class="cover-subtitle">Selected Works</div>
+  </div>
+  <div class="cover-bottom">
+    CLICK TO OPEN
+  </div>
 </div>
 
 <div id="app">
-  <!-- 导航栏 -->
+  <!-- 极简导航 -->
   <nav class="nav">
     <div class="nav-inner">
-      <div class="nav-logo" onclick="switchPage('home')">📔 摄影日记</div>
+      <div class="nav-logo" onclick="switchPage('home')">STUDIO.</div>
       <div class="nav-links">
-        <button class="nav-link active" data-page="home" onclick="switchPage('home')">📷 画廊</button>
-        <button class="nav-link" data-page="about" onclick="switchPage('about')">🌸 关于我</button>
-        <button class="nav-link" data-page="contact" onclick="switchPage('contact')">💌 联系</button>
+        <button class="nav-link active" data-page="home" onclick="switchPage('home')">Editorial</button>
+        <button class="nav-link" data-page="about" onclick="switchPage('about')">About</button>
+        <button class="nav-link" data-page="contact" onclick="switchPage('contact')">Contact</button>
       </div>
     </div>
   </nav>
@@ -298,102 +341,100 @@ body::before {
   <div class="page-container" id="pageContainer">
     <!-- ====== 首页/画廊 ====== -->
     <section class="page active" id="page-home">
-      <div class="hero">
-        <h1 class="hero-title">用镜头写下生活的诗</h1>
-        <p class="hero-subtitle">每一次按下快门，都是给未来的自己写一封信</p>
+      <div class="section-header">
+        <h1 class="section-title">Visual Narratives</h1>
+        <p class="section-subtitle">Exploring light, shadow, and architecture.</p>
       </div>
+      
       <div class="filters" id="filters"></div>
+      
       <div class="gallery">
         <div class="grid" id="gallery-grid"></div>
-        <div class="empty" id="gallery-empty" style="display:none; text-align: center; padding: 50px;">
-          <span style="font-size: 3rem;">📭</span><p>这个分类还没有作品哦～</p>
-        </div>
       </div>
     </section>
 
-    <!-- ====== 关于我 ====== -->
+    <!-- ====== 关于 ====== -->
     <section class="page" id="page-about">
-      <div class="about">
-        <div class="paper-card">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <div class="about-avatar" style="margin: 0 auto 20px;">📷</div>
-            <h2 style="font-size: 1.8rem; font-family: 'Noto Serif SC',serif;">你好，我是 Half‑Seer · shan</h2>
-            <p style="color: var(--ink-light); margin-top: 10px;">一个喜欢用镜头记录生活的摄影师。</p>
+      <div class="about-layout">
+        <div class="about-image"></div>
+        <div class="about-content">
+          <div class="section-subtitle" style="margin-bottom:10px;">The Photographer</div>
+          <h2 class="about-name">Half-Seer · Shan</h2>
+          <p class="about-desc">
+            Based in the metropolis, focusing on editorial, architectural, and high-fashion photography. 
+            My work is heavily influenced by minimalism and brutalist aesthetics, stripping away the unnecessary to reveal the raw structure of subjects. Light and shadow are my primary mediums.
+          </p>
+          <div class="gear-list">
+            <div class="gear-item"><span>Digital Medium Format</span><span>Fujifilm GFX 100S</span></div>
+            <div class="gear-item"><span>Prime Lens</span><span>GF 80mm f/1.7 R WR</span></div>
+            <div class="gear-item"><span>35mm Format</span><span>Leica M11 Monochrom</span></div>
+            <div class="gear-item"><span>Lighting</span><span>Profoto B10X Plus</span></div>
           </div>
-          <div style="background: var(--mint-light); padding: 20px; border-radius: 8px; border-left: 4px solid var(--mint); margin-bottom: 30px; font-style: italic;">
-            "我喜欢拍那些正在消失的东西——午后的光线、季节的味道、还有人们不设防的瞬间。"
-          </div>
-          <h3 style="margin-bottom: 15px; border-bottom: 1px dashed var(--line); padding-bottom: 8px;">📸 常用装备</h3>
-          <ul style="list-style: none; color: var(--ink-light); line-height: 2.2;">
-            <li><strong>Sony A7M4</strong> - 主力机身，可靠的伙伴</li>
-            <li><strong>FE 24-70mm F2.8</strong> - 常用挂机头</li>
-            <li><strong>FE 85mm F1.4</strong> - 人像利器，梦幻虚化</li>
-            <li><strong>Fujifilm X100V</strong> - 随身口袋机，日常记录</li>
-          </ul>
         </div>
       </div>
     </section>
 
-    <!-- ====== 联系我 ====== -->
+    <!-- ====== 联系 ====== -->
     <section class="page" id="page-contact">
-      <div class="contact">
-        <div class="paper-card">
-          <h1 style="text-align: center; font-size: 2rem; margin-bottom: 10px;">联系我 💌</h1>
-          <p style="text-align: center; color: var(--ink-light); margin-bottom: 30px;">有什么想说的，就像寄一封手写信那样写下来吧～</p>
-          
-          <form id="contact-form" onsubmit="handleSubmit(event)">
-            <div style="margin-bottom: 20px;">
-              <input class="form-input" type="text" id="cf-name" placeholder="怎么称呼你呢？" required>
-            </div>
-            <div style="margin-bottom: 20px;">
-              <input class="form-input" type="email" id="cf-email" placeholder="留下邮箱我好回复你～" required>
-            </div>
-            <div style="margin-bottom: 20px;">
-              <textarea class="form-textarea" id="cf-message" placeholder="写下你想说的任何话..." rows="5" required></textarea>
-            </div>
-            <button type="submit" class="form-btn">📮 投递信件</button>
-          </form>
-
-          <div id="success-msg" style="display:none; text-align:center; padding: 40px 0;">
-            <span style="font-size: 4rem;">✨</span>
-            <h3 style="margin: 15px 0;">收到你的来信啦！</h3>
-            <p style="color: var(--ink-light);">谢谢你的留言，我会尽快回复你～</p>
-            <button onclick="resetForm()" style="margin-top: 20px; padding: 8px 20px; border-radius: 20px; border: 1px solid var(--mint); background: none; cursor: pointer;">再写一封</button>
+      <div class="contact-layout">
+        <div class="section-header" style="text-align: center;">
+          <h1 class="section-title">Inquiries</h1>
+        </div>
+        <p class="contact-desc">For commissions, print sales, or commercial assignments, please leave a message below.</p>
+        
+        <form id="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <input class="form-input" type="text" id="cf-name" placeholder="Full Name" required>
           </div>
+          <div class="form-group">
+            <input class="form-input" type="email" id="cf-email" placeholder="Email Address" required>
+          </div>
+          <div class="form-group">
+            <textarea class="form-textarea" id="cf-message" placeholder="Subject / Message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="form-btn">Submit Inquiry</button>
+        </form>
+
+        <div id="success-msg" style="display:none; text-align:center; padding: 40px 0; border: 1px solid var(--text-main); margin-top: 20px;">
+          <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 10px;">Message Received</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">We will get back to you shortly.</p>
+          <button onclick="resetForm()" style="margin-top: 30px; padding: 10px 20px; border: 1px solid var(--text-main); background: none; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">Return</button>
         </div>
       </div>
     </section>
   </div>
 </div>
 
-<!-- 灯箱 -->
+<!-- 极简灯箱 -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
   <div class="lb-main" onclick="event.stopPropagation()">
     <button class="lb-arrow" id="lb-prev" onclick="prevPhoto()">‹</button>
-    <img class="lb-img" id="lb-img" src="" alt="">
+    <div class="lb-img-container">
+      <img class="lb-img" id="lb-img" src="" alt="">
+      <div class="lb-info" id="lb-info"></div>
+      <div class="lb-meta" id="lb-meta"></div>
+    </div>
     <button class="lb-arrow" id="lb-next" onclick="nextPhoto()">›</button>
   </div>
-  <div class="lb-info" id="lb-info"></div>
 </div>
 
 <script>
-// ========== 修复并丰富的测试数据 ==========
+// 高端排版测试数据 (Fashion, Architecture, Minimal)
 const photos = [
-  { id:1, src:'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', title:'京都傍晚', cat:'landscape', catLabel:'风光 🌿', aspect:'tall', date:'2026-04-12', location:'京都' },
-  { id:2, src:'https://images.unsplash.com/photo-1517504734587-2890819debab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1517504734587-2890819debab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', title:'街角咖啡', cat:'other', catLabel:'其他 ✨', aspect:'square', date:'2026-05-20', location:'上海' },
-  { id:3, src:'https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', thumb:'https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', title:'匆匆', cat:'street', catLabel:'街拍 🚲', aspect:'wide', date:'2026-07-01', location:'东京' },
-  { id:4, src:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', title:'微风', cat:'portrait', catLabel:'人像 🤍', aspect:'big', date:'2026-08-05', location:'镰仓' },
-  { id:5, src:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', title:'思考', cat:'portrait', catLabel:'人像 🤍', aspect:'tall', date:'2026-08-09', location:'北京' },
-  { id:6, src:'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', title:'城市天际线', cat:'landscape', catLabel:'风光 🌿', aspect:'wide', date:'2026-08-10', location:'深圳' }
+  { id:1, src:'https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1549490349-8643362247b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', title:'The Silhouette', cat:'fashion', catLabel:'Fashion', aspect:'tall', date:'OCT 2025', location:'PARIS' },
+  { id:2, src:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', thumb:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', title:'Concrete Brutalism', cat:'architecture', catLabel:'Architecture', aspect:'wide', date:'NOV 2025', location:'BERLIN' },
+  { id:3, src:'https://images.unsplash.com/photo-1509631179647-0177331693ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1509631179647-0177331693ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', title:'Avant-Garde', cat:'fashion', catLabel:'Fashion', aspect:'big', date:'JAN 2026', location:'MILAN' },
+  { id:4, src:'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', title:'Interior Void', cat:'architecture', catLabel:'Architecture', aspect:'square', date:'FEB 2026', location:'TOKYO' },
+  { id:5, src:'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', title:'Monochrome Streets', cat:'editorial', catLabel:'Editorial', aspect:'tall', date:'MAR 2026', location:'NEW YORK' },
+  { id:6, src:'https://images.unsplash.com/photo-1502307100811-6bdc0981a85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', thumb:'https://images.unsplash.com/photo-1502307100811-6bdc0981a85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', title:'Form & Function', cat:'architecture', catLabel:'Architecture', aspect:'square', date:'APR 2026', location:'LONDON' }
 ];
 
 const categories = [
-  { key:'all', label:'全部作品' },
-  { key:'portrait', label:'人像 🤍' },
-  { key:'landscape', label:'风光 🌿' },
-  { key:'street', label:'街拍 🚲' },
-  { key:'other', label:'其他 ✨' },
+  { key:'all', label:'All Works' },
+  { key:'fashion', label:'Fashion' },
+  { key:'architecture', label:'Architecture' },
+  { key:'editorial', label:'Editorial' }
 ];
 
 let currentCat = 'all';
@@ -410,7 +451,6 @@ function switchPage(name) {
   const pages = document.querySelectorAll('.page');
   pages.forEach(p => p.classList.remove('active'));
   
-  // 稍作延迟让 CSS 3D 动画生效
   setTimeout(() => {
     document.getElementById('page-' + name).classList.add('active');
   }, 50);
@@ -434,40 +474,34 @@ function renderFilters() {
 function renderGallery() {
   const list = currentCat === 'all' ? photos : photos.filter(p => p.cat === currentCat);
   const grid = document.getElementById('gallery-grid');
-  const empty = document.getElementById('gallery-empty');
 
   if (list.length === 0) {
-    grid.innerHTML = '';
-    empty.style.display = 'block';
+    grid.innerHTML = '<div style="padding:50px; text-align:center; grid-column:1/-1;">NO ARCHIVES FOUND.</div>';
     return;
   }
-  empty.style.display = 'none';
 
   grid.innerHTML = list.map(p => `
     <div class="card ${p.aspect}" onclick="openLightbox(${p.id})">
-      <div class="tape"></div>
       <div class="card-img"><img src="${p.thumb}" alt="${p.title}" loading="lazy"></div>
-      <div class="card-info">
+      <div class="card-overlay">
         <div class="card-title">${p.title}</div>
-        <div class="card-meta">📅 ${p.date}</div>
+        <div class="card-meta">${p.date} // ${p.location}</div>
       </div>
     </div>
   `).join('');
 }
 
-// 修复了之前的命名错误 filterPosts -> filterPhotos
+// 分类筛选
 function filterPhotos(key) {
   currentCat = key;
   renderFilters();
-  
-  // 切换分类时加一点小动画
   const grid = document.getElementById('gallery-grid');
   grid.style.opacity = 0;
   setTimeout(() => {
     renderGallery();
-    grid.style.transition = 'opacity 0.5s';
+    grid.style.transition = 'opacity 0.6s ease';
     grid.style.opacity = 1;
-  }, 200);
+  }, 300);
 }
 
 // 灯箱逻辑
@@ -486,9 +520,11 @@ function closeLightbox() {
 function showLightboxPhoto() {
   const p = lbPhotos[lbIndex];
   document.getElementById('lb-img').src = p.src;
-  document.getElementById('lb-info').innerHTML = `<h3>${p.title}</h3><p style="opacity:0.7; font-size:0.9rem; margin-top:5px;">📍 ${p.location} | 🏷 ${p.catLabel}</p>`;
-  document.getElementById('lb-prev').style.opacity = lbIndex > 0 ? '1' : '0';
-  document.getElementById('lb-next').style.opacity = lbIndex < lbPhotos.length - 1 ? '1' : '0';
+  document.getElementById('lb-info').innerText = p.title;
+  document.getElementById('lb-meta').innerText = `${p.catLabel} — ${p.date} — ${p.location}`;
+  
+  document.getElementById('lb-prev').style.visibility = lbIndex > 0 ? 'visible' : 'hidden';
+  document.getElementById('lb-next').style.visibility = lbIndex < lbPhotos.length - 1 ? 'visible' : 'hidden';
 }
 
 function prevPhoto() { if (lbIndex > 0) { lbIndex--; showLightboxPhoto(); } }
